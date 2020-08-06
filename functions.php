@@ -163,5 +163,5 @@ require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-hooks.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-functions.php';
 
 
-	$try='php';
-echo $try;
+$try = 'php';
+echo esc_attr( $try );
