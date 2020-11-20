@@ -8,14 +8,6 @@
     "wp-coding-standards/wpcs": "^2.1.0",
     "wptrt/wpthemereview": "^0.2.0"
   },
-  "extra": {
-    "hooks": {
-      "pre-commit": [
-        "echo committing as $(git config user.name)",
-        "sh bin/block-commits-with-merge-conflict.sh"
-      ]
-    }
-  },
   "scripts": {
     "post-install-cmd": "vendor/bin/cghooks add --ignore-lock",
     "post-update-cmd": "vendor/bin/cghooks update",
