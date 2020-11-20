@@ -8,11 +8,8 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: Install dependencies
-          run: composer install --prefer-dist --no-progress
-        - name: Check Composer
-          run: composer -v
+          run: composer install --dev --prefer-dist --no-progress --no-suggest
         - name: PHPCS check
           uses: chekalsky/phpcs-action@v1
           with:
-            enable_warnings: true
-            phpcs_bin_path: './'
+            phpcs_bin_path: './vendor/bin/phpcs'
