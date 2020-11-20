@@ -8,7 +8,9 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: Install dependencies
-          run: composer install --dev --prefer-dist --no-progress --no-suggest
+          run: composer install --prefer-dist --no-progress
+        - name: Check Composer
+          run: composer -v
         - name: PHPCS check
           uses: chekalsky/phpcs-action@v1
           with:
