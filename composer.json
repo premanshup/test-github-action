@@ -1,5 +1,5 @@
 {
-  "name": "premanshup/test-github-action",
+  "name": "brainstormforce/astra",
   "description": "A very lightweight and beautiful theme made to work with Page Builders",
   "require-dev": {
     "brainmaestro/composer-git-hooks": "^2.6",
@@ -7,6 +7,14 @@
     "phpcompatibility/phpcompatibility-wp": "*",
     "wp-coding-standards/wpcs": "^2.1.0",
     "wptrt/wpthemereview": "^0.2.0"
+  },
+  "extra": {
+    "hooks": {
+      "pre-commit": [
+        "echo committing as $(git config user.name)",
+        "sh bin/block-commits-with-merge-conflict.sh"
+      ]
+    }
   },
   "scripts": {
     "post-install-cmd": "vendor/bin/cghooks add --ignore-lock",
