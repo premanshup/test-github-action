@@ -1886,6 +1886,7 @@ input[type="submit"]:focus {
 
 .ast-search-menu-icon {
   position: relative;
+  z-index: 3;
 }
 
 .ast-header-break-point.ast-header-custom-item-outside .main-header-bar .ast-search-icon {

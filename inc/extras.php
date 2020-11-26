@@ -186,7 +186,7 @@ if ( ! function_exists( 'astra_check_is_ie' ) ) :
 		$is_ie = false;
 
 		if ( ! empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
-			$ua = htmlentities( $_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8' );
+			$ua = htmlentities( sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ), ENT_QUOTES, 'UTF-8' );
 			if ( strpos( $ua, 'Trident/7.0' ) !== false ) {
 				$is_ie = true;
 			}
@@ -198,7 +198,7 @@ if ( ! function_exists( 'astra_check_is_ie' ) ) :
 endif;
 
 /**
- * Replace heade logo.
+ * Replace header logo.
  */
 if ( ! function_exists( 'astra_replace_header_logo' ) ) :
 
@@ -314,62 +314,16 @@ function astra_attr( $context, $attributes = array(), $args = array() ) {
 }
 
 /**
- * Ninja Forms compatibility id.
+ * Check the WordPress version.
  *
- * @since 1.6.9
- *
- * @return int Compatibility id.
+ * @since  2.5.4
+ * @param string $version   WordPress version to compare with the current version.
+ * @param string $compare   Comparison value i.e > or < etc.
+ * @return bool            True/False based on the  $version and $compare value.
  */
-function astra_filter_ninja_forms_comp_id() {
-	return 1115254;
-};
+function astra_wp_version_compare( $version, $compare ) {
 
-add_filter( 'ninja_forms_affiliate_id', 'astra_filter_ninja_forms_comp_id' );
-
-/**
- * Change upgrade link for wpforms.
- *
- * @param string $url upgrade launch page URL.
- * @return String updated upgrade link.
- */
-function astra_wpforms_upgrade_link( $url ) {
-	return 'https://shareasale.com/r.cfm?b=834775&u=1115254&m=64312&urllink=&afftrack=' . rawurlencode( $url );
-}
-
-add_filter( 'wpforms_upgrade_link', 'astra_wpforms_upgrade_link' );
-
-/**
- * Added referal ID to social snap upgrade link.
- *
- * @param string $link social snap upgrade link.
- * @return String social snap upgrade link
- */
-function astra_filter_socialsnap_upgrade_link( $link ) {
-	return 'https://socialsnap.com/?ref=352';
-}
-
-add_filter( 'socialsnap_upgrade_link', 'astra_filter_socialsnap_upgrade_link' );
-
-/**
- * Update GiveWP's "Add-ons" link.
- *
- * Compatibility to change the link according to their needs.
- */
-function astra_givewp_upgrade_link() {
-	return 'https://givewp.com/ref/412';
-}
-
-add_action( 'give_addon_menu_item_url', 'astra_givewp_upgrade_link' );
-
-/**
- * Get instance of WP_Filesystem.
- *
- * @since 2.1.0
- *
- * @return WP_Filesystem
- */
-function astra_filesystem() {
-	return Astra_Filesystem::instance();
+	return version_compare( get_bloginfo( 'version' ), $version, $compare );
 }
 
 /**
@@ -379,7 +333,7 @@ function astra_filesystem() {
  * @param WP_Customize_Manager $wp_customize instance of WP_Customize_Manager.
  * @return $wp_customize
  */
-function remove_controls( $wp_customize ) {
+function astra_remove_controls( $wp_customize ) {
 
 	if ( defined( 'ASTRA_EXT_VER' ) && version_compare( ASTRA_EXT_VER, '2.4.0', '<=' ) ) {
 		$layout = array(
@@ -399,34 +353,45 @@ function remove_controls( $wp_customize ) {
 	return $wp_customize;
 }
 
-add_filter( 'astra_customizer_configurations', 'remove_controls', 99 );
+add_filter( 'astra_customizer_configurations', 'astra_remove_controls', 99 );
 
 /**
- * Pass theme specific stats to BSF analytics.
+ * Is theme existing header footer configs enable.
  *
- * @since 2.4.3
- * @param array $default_stats Default stats array.
- * @return array $default_stats Default stats with Theme specific stats array.
+ * @since 3.0.0
+ *
+ * @return boolean true/false.
  */
-function astra_add_theme_specific_stats( $default_stats ) {
-	$default_stats['astra_settings'] = array(
-		'version'             => ASTRA_THEME_VERSION,
-		'breadcrumb-position' => astra_get_option( 'breadcrumb-position', false ),
-		'mobile-menu-style'   => astra_get_option( 'mobile-menu-style', false ),
-	);
-	return $default_stats;
-}
+function astra_existing_header_footer_configs() {
 
-add_filter( 'bsf_core_stats', 'astra_add_theme_specific_stats' );
+	return apply_filters( 'astra_existing_header_footer_configs', true );
+}
 
 /**
- * HubSpot Plugin compatibility.
+ * Get Spacing value
  *
- * @since 2.4.4
- * @return string Compatibility string.
+ * @param  array  $value        Responsive spacing value with unit.
+ * @param  string $operation    + | - | * | /.
+ * @param  string $from         Perform operation from the value.
+ * @param  string $from_unit    Perform operation from the value of unit.
+ *
+ * @since 3.0.0
+ * @return mixed
  */
-function astra_get_hubspot_comp_code() {
-	return 'WsZfC';
-}
+function astra_calculate_spacing( $value, $operation = '', $from = '', $from_unit = '' ) {
 
-add_filter( 'leadin_affiliate_code', 'astra_get_hubspot_comp_code' );
+	$css = '';
+	if ( ! empty( $value ) ) {
+		$css = $value;
+		if ( ! empty( $operation ) && ! empty( $from ) ) {
+			if ( ! empty( $from_unit ) ) {
+				$css = 'calc( ' . $value . ' ' . $operation . ' ' . $from . $from_unit . ' )';
+			}
+			if ( '*' === $operation || '/' === $operation ) {
+				$css = 'calc( ' . $value . ' ' . $operation . ' ' . $from . ' )';
+			}
+		}
+	}
+
+	return $css;
+}

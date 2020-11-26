@@ -126,19 +126,23 @@ if ( ! class_exists( 'Astra_Theme_Options' ) ) {
 						'background-position'   => 'center center',
 						'background-size'       => 'auto',
 						'background-attachment' => 'scroll',
+						'background-type'       => '',
+						'background-media'      => '',
 					),
 					'footer-color'                         => '',
 					'footer-link-color'                    => '',
 					'footer-link-h-color'                  => '',
 
 					// Footer Widgets Background.
-					'footer-adv-bg-obj-responsive'         => array(
+					'footer-adv-bg-obj'                    => array(
 						'background-color'      => '',
 						'background-image'      => '',
 						'background-repeat'     => 'repeat',
 						'background-position'   => 'center center',
 						'background-size'       => 'auto',
 						'background-attachment' => 'scroll',
+						'background-type'       => '',
+						'background-media'      => '',
 					),
 					'footer-adv-text-color'                => '',
 					'footer-adv-link-color'                => '',
@@ -291,6 +295,8 @@ if ( ! class_exists( 'Astra_Theme_Options' ) ) {
 							'background-position'   => 'center center',
 							'background-size'       => 'auto',
 							'background-attachment' => 'scroll',
+							'background-type'       => '',
+							'background-media'      => '',
 						),
 						'tablet'  => array(
 							'background-color'      => '',
@@ -299,6 +305,8 @@ if ( ! class_exists( 'Astra_Theme_Options' ) ) {
 							'background-position'   => 'center center',
 							'background-size'       => 'auto',
 							'background-attachment' => 'scroll',
+							'background-type'       => '',
+							'background-media'      => '',
 						),
 						'mobile'  => array(
 							'background-color'      => '',
@@ -307,6 +315,8 @@ if ( ! class_exists( 'Astra_Theme_Options' ) ) {
 							'background-position'   => 'center center',
 							'background-size'       => 'auto',
 							'background-attachment' => 'scroll',
+							'background-type'       => '',
+							'background-media'      => '',
 						),
 					),
 					// Container.

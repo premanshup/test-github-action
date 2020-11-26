@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     // Project configuration
     var autoprefixer = require('autoprefixer');
     var flexibility = require('postcss-flexibility');
-    var Astra_theme_Addons = ['background', 'border', 'color', 'customizer-link', 'description', 'divider', 'heading', 'hidden', 'link', 'radio-image', 'responsive', 'responsive-color', 'responsive-background', 'responsive-slider', 'responsive-spacing', 'select', 'settings-group', 'slider', 'sortable', 'spacing', 'typography'];
+    var Astra_theme_Addons = ['background', 'border', 'color', 'customizer-link', 'description', 'divider', 'heading', 'hidden', 'link', 'radio-image', 'responsive', 'responsive-color', 'responsive-background', 'responsive-select', 'responsive-slider', 'responsive-spacing', 'select', 'settings-group', 'slider', 'sortable', 'spacing', 'typography'];
 
     const sass = require('node-sass');
 
@@ -142,6 +142,15 @@ module.exports = function (grunt) {
                         dest: 'assets/css/unminified',
                         ext: '.css'
                     },
+                    /* Common Style with new Header-Footer Builder Style */
+                    {
+                        expand: true,
+                        cwd: 'sass/',
+                        src: ['frontend.scss'],
+                        dest: 'assets/css/unminified',
+                        ext: '.css'
+                    },
+
                     /* Compatibility */
                     {
                         expand: true,
@@ -374,15 +383,12 @@ module.exports = function (grunt) {
                     '!package-lock.json',
                     '!phpcs.xml.dist',
                     '!assets/fonts/google-fonts.json',
-                    '!admin/bsf-analytics/.git/**',
-                    '!admin/bsf-analytics/bin/**',
-                    '!admin/bsf-analytics/.gitignore',
-                    '!admin/bsf-analytics/composer.json',
-                    '!admin/bsf-analytics/composer.lock',
-                    '!admin/bsf-analytics/Gruntfile.js',
-                    '!admin/bsf-analytics/package.json',
-                    '!admin/bsf-analytics/package-lock.json',
-                    '!admin/bsf-analytics/phpcs.xml.dist',
+                    '!inc/customizer/extend-custom-controls/package.json',
+                    '!inc/customizer/extend-custom-controls/package-lock.json',
+                    '!inc/customizer/extend-custom-controls/src/**',
+                    '!inc/customizer/extend-custom-controls/node_modules/**',
+                    '!inc/customizer/extend-custom-controls/build/index.asset.php',
+                    '!inc/customizer/extend-custom-controls/build/index.js.map',
                 ],
                 dest: 'astra/'
             }
@@ -463,25 +469,19 @@ module.exports = function (grunt) {
                             '!inc/customizer/custom-controls/assets/css/unminified/custom-controls.css',
                         ],
                         dest: 'inc/customizer/custom-controls/assets/css/unminified/custom-controls.css',
+					},
+					{
+                        src: [
+                            'inc/customizer/custom-controls/link/link.js',
+                            'inc/customizer/custom-controls/typography/typography.js',
+                            'inc/customizer/custom-controls/typography/selectWoo.js',
+                        ],
+                        dest: 'inc/customizer/custom-controls/assets/js/unminified/custom-controls-plain.js',
                     },
                     {
                         src: [
-                            'inc/customizer/custom-controls/background/background.js',
-                            'inc/customizer/custom-controls/border/border.js',
-                            'inc/customizer/custom-controls/color/color.js',
-                            'inc/customizer/custom-controls/link/link.js',
-                            'inc/customizer/custom-controls/customizer-link/customizer-link.js',
-                            'inc/customizer/custom-controls/radio-image/radio-image.js',
-                            'inc/customizer/custom-controls/responsive/responsive.js',
-                            'inc/customizer/custom-controls/responsive-color/responsive-color.js',
-                            'inc/customizer/custom-controls/responsive-background/responsive-background.js',
-                            'inc/customizer/custom-controls/responsive-slider/responsive-slider.js',
-                            'inc/customizer/custom-controls/responsive-spacing/responsive-spacing.js',
-                            'inc/customizer/custom-controls/settings-group/settings-group.js',
-                            'inc/customizer/custom-controls/slider/slider.js',
-                            'inc/customizer/custom-controls/sortable/sortable.js',
-                            'inc/customizer/custom-controls/typography/typography.js'
-
+                            'inc/customizer/custom-controls/assets/js/unminified/custom-controls-plain.js',
+                            'inc/customizer/extend-custom-controls/build/index.js'
                         ],
                         dest: 'inc/customizer/custom-controls/assets/js/unminified/custom-controls.js',
                     },
@@ -553,7 +553,7 @@ module.exports = function (grunt) {
 				}
 			},
         },
-        
+
         json2php: {
             options: {
                 // Task-specific options go here.
@@ -598,7 +598,7 @@ module.exports = function (grunt) {
 
     // min all
     grunt.registerTask('minify', ['style', 'concat', 'uglify:js', 'cssmin:css']);
-    
+
     grunt.registerTask('download-google-fonts', function () {
         var done = this.async();
         var request = require('request');

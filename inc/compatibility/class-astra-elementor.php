@@ -5,7 +5,7 @@
  * @package Astra
  */
 
-namespace Elementor;
+namespace Elementor;// phpcs:ignore PHPCompatibility.Keywords.NewKeywords.t_namespaceFound
 
 // If plugin - 'Elementor' not exist then return.
 if ( ! class_exists( '\Elementor\Plugin' ) ) {
@@ -136,14 +136,14 @@ if ( ! class_exists( 'Astra_Elementor' ) ) :
 					// In the preview mode, Apply the layouts using filters for Elementor Template Library.
 					add_filter(
 						'astra_page_layout',
-						function() {
+						function() { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewClosure.Found
 							return 'no-sidebar';
 						}
 					);
 
 					add_filter(
 						'astra_get_content_layout',
-						function () {
+						function () { // phpcs:ignore PHPCompatibility.FunctionDeclarations.NewClosure.Found
 							return 'page-builder';
 						}
 					);

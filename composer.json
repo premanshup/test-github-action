@@ -3,9 +3,10 @@
   "description": "A very lightweight and beautiful theme made to work with Page Builders",
   "require-dev": {
     "brainmaestro/composer-git-hooks": "^2.6",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
     "phpcompatibility/phpcompatibility-wp": "*",
-    "wp-coding-standards/wpcs": "dev-master"
+    "wp-coding-standards/wpcs": "^2.1.0",
+    "wptrt/wpthemereview": "^0.2.0"
   },
   "extra": {
     "hooks": {

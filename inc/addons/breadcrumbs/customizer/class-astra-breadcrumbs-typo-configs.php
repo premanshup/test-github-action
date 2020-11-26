@@ -58,6 +58,7 @@ if ( ! class_exists( 'Astra_Breadcrumbs_Typo_Configs' ) ) {
 					'required' => array( ASTRA_THEME_SETTINGS . '[breadcrumb-position]', '!=', 'none' ),
 					'priority' => 73,
 					'settings' => array(),
+					'context'  => Astra_Builder_Helper::$design_tab,
 				),
 
 				/*
@@ -73,6 +74,7 @@ if ( ! class_exists( 'Astra_Breadcrumbs_Typo_Configs' ) ) {
 					'section'   => 'section-breadcrumb',
 					'transport' => 'postMessage',
 					'priority'  => 73,
+					'context'   => Astra_Builder_Helper::$design_tab,
 				),
 
 				/**

@@ -46,7 +46,7 @@ if ( ! class_exists( 'Astra_Woocommerce' ) ) :
 		 */
 		public function __construct() {
 
-			require_once ASTRA_THEME_DIR . 'inc/compatibility/woocommerce/woocommerce-common-functions.php';
+			require_once ASTRA_THEME_DIR . 'inc/compatibility/woocommerce/woocommerce-common-functions.php';// phpcs:ignore: WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 
 			add_filter( 'woocommerce_enqueue_styles', array( $this, 'woo_filter_style' ) );
 
@@ -1372,6 +1372,7 @@ if ( ! class_exists( 'Astra_Woocommerce' ) ) :
 		 */
 		public function customize_register( $wp_customize ) {
 
+			// @codingStandardsIgnoreStart WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 			/**
 			 * Register Sections & Panels
 			 */
@@ -1385,6 +1386,7 @@ if ( ! class_exists( 'Astra_Woocommerce' ) ) :
 			require ASTRA_THEME_DIR . 'inc/compatibility/woocommerce/customizer/sections/layout/class-astra-woo-shop-layout-configs.php';
 			require ASTRA_THEME_DIR . 'inc/compatibility/woocommerce/customizer/sections/layout/class-astra-woo-shop-single-layout-configs.php';
 			require ASTRA_THEME_DIR . 'inc/compatibility/woocommerce/customizer/sections/layout/class-astra-woo-shop-cart-layout-configs.php';
+			// @codingStandardsIgnoreEnd WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 
 		}
 
@@ -1517,7 +1519,6 @@ if ( ! class_exists( 'Astra_Woocommerce' ) ) :
 			$astra_settings['global-btn-woo-css'] = isset( $astra_settings['global-btn-woo-css'] ) ? false : true;
 			return apply_filters( 'astra_global_btn_woo_comp', $astra_settings['global-btn-woo-css'] );
 		}
-
 	}
 
 endif;

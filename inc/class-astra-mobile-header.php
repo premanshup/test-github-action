@@ -74,6 +74,7 @@ if ( ! class_exists( 'Astra_Mobile_Header' ) ) :
 				if ( isset( $args->theme_location ) &&
 				( 'primary' === $args->theme_location ||
 				'above_header_menu' === $args->theme_location ||
+				'secondary_menu' === $args->theme_location ||
 				'below_header_menu' === $args->theme_location )
 				) {
 					if ( isset( $item->classes ) && in_array( 'menu-item-has-children', $item->classes ) ) {

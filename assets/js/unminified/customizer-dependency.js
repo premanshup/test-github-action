@@ -11,6 +11,10 @@
     /* Internal shorthand */
     var api = wp.customize;
 
+    var checkDependencyOnTabChange = function () {
+        Astra_Customizer.handleDependency();
+    }
+
 	/**
 	 * Helper class for the main Customizer interface.
 	 *
@@ -34,15 +38,17 @@
             $this.handleDependency();
             $this.hideEmptySections();
 
-            api.bind('change', function ( setting, data ) {
+            api.state( 'astra-customizer-tab' ).bind( checkDependencyOnTabChange );
+
+            api.bind( 'change', function ( setting, data ) {
 
                 var has_dependents = $this.hasDependentControls( setting.id );
 
                 if( has_dependents ) {
-                    
+
                     $this.handleDependency();
                     $this.hideEmptySections();
-                    
+
                 }
             });
         },
@@ -77,9 +83,9 @@
                     }
                 }
 
-            });   
+            });
 
-            return check;              
+            return check;
 
         },
 
@@ -121,16 +127,18 @@
                 // If control has dependency defined
                 if ( 'undefined' != typeof astra.config[id] ) {
                     var check = false;
+                    var checkContext = true;
                     var required_param = astra.config[id];
                     var conditions = !_.isUndefined(required_param.conditions) ? required_param.conditions : required_param;
                     var operator = !_.isUndefined(required_param.operator) ? required_param.operator : 'AND';
 
                     if ( 'undefined' !== typeof conditions ) {
                         check = $this.checkDependency(conditions, values, operator);
+                        checkContext = $this.checkContext(id);
 
-                        this.checked_controls[id] = check;
+                        this.checked_controls[id] = ( check && checkContext );
 
-                        if (!check) {
+                        if (!( check && checkContext )) {
                             control.container.addClass('ast-hide');
                         } else {
                             control.container.removeClass('ast-hide');
@@ -138,6 +146,33 @@
                     }
                 }
             }
+        },
+
+        /**
+		 * Checks Context dependency condtions for controls
+		 *
+		 * @since 3.0.0
+		 * @access private
+		 * @method checkDependency
+		 */
+        checkContext: function( id ) {
+
+            if ('undefined' != typeof AstraBuilderCustomizerData) {
+
+                var contexts = AstraBuilderCustomizerData.contexts[id];
+
+                if ( undefined !== contexts ) {
+                    var current_tab = api.state('astra-customizer-tab').get();
+                    for( var $i = 0; $i < contexts.length; $i++ ) {
+                        if ( contexts[$i].setting === 'ast_selected_tab' && contexts[$i].value === current_tab ) {
+                            return true;
+                        }
+                        return false;
+                    }
+                    return true;
+                }
+            }
+            return true;
         },
 
 		/**
@@ -176,7 +211,9 @@
                             }
                         } else {
                             var control_obj = api.control(test);
-                            control_obj.container.removeClass('ast-hide');
+                            if ( undefined !== control_obj ) {
+                                control_obj.container.removeClass('ast-hide');
+                            }
                         }
                     }
                 }
@@ -185,7 +222,6 @@
                     value = values[test];
                     check = control.compareValues( value, cond, cond_val );
                 }
-                
 
             } else if ( _.isArray( test ) ) {
 
@@ -194,7 +230,7 @@
                     var cond_key = val[0];
                     var cond_cond = val[1];
                     var cond_val = val[2];
-                    var t_val = !_.isUndefined( values[cond_key] ) ? values[cond_key] : ''; 
+                    var t_val = !_.isUndefined( values[cond_key] ) ? values[cond_key] : '';
 
                     if ( 'undefined' !== typeof astra.config[cond_key] ) {
 
@@ -213,7 +249,9 @@
                             } else {
                                 check = true;
                                 var control_obj = api.control(cond_key);
-                                control_obj.container.removeClass('ast-hide');
+                                if (control_obj) {
+                                    control_obj.container.removeClass('ast-hide');
+                                }
                             }
                         }
                     } else {
@@ -355,7 +393,11 @@
         },
     };
 
-    $(function () { Astra_Customizer.init(); });
+    $(function () {
+		window.addEventListener('load', function() {
+			Astra_Customizer.init();
+		});
+    });
 
 
 })(jQuery);

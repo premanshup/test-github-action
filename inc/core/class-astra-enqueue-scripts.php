@@ -88,6 +88,10 @@ if ( ! class_exists( 'Astra_Enqueue_Scripts' ) ) {
 			global $pagenow;
 			$screen = get_current_screen();
 
+			if ( Astra_Builder_Helper::$is_header_footer_builder_active ) {
+				$classes .= ' ast-hf-builder-activated';
+			}
+
 			if ( ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) && ( defined( 'ASTRA_ADVANCED_HOOKS_POST_TYPE' ) && ASTRA_ADVANCED_HOOKS_POST_TYPE == $screen->post_type ) ) {
 				return;
 			}
@@ -126,18 +130,35 @@ if ( ! class_exists( 'Astra_Enqueue_Scripts' ) ) {
 		 */
 		public static function theme_assets() {
 
-			$default_assets = array(
+			if ( Astra_Builder_Helper::$is_header_footer_builder_active ) {
 
-				// handle => location ( in /assets/js/ ) ( without .js ext).
-				'js'  => array(
-					'astra-theme-js' => 'style',
-				),
+				$default_assets = array(
 
-				// handle => location ( in /assets/css/ ) ( without .css ext).
-				'css' => array(
-					'astra-theme-css' => 'style',
-				),
-			);
+					// handle => location ( in /assets/js/ ) ( without .js ext).
+					'js'  => array(
+						'astra-theme-js' => 'frontend',
+					),
+
+					// handle => location ( in /assets/css/ ) ( without .css ext).
+					'css' => array(
+						'astra-theme-css' => 'frontend',
+					),
+				);
+			} else {
+
+				$default_assets = array(
+
+					// handle => location ( in /assets/js/ ) ( without .js ext).
+					'js'  => array(
+						'astra-theme-js' => 'style',
+					),
+
+					// handle => location ( in /assets/css/ ) ( without .css ext).
+					'css' => array(
+						'astra-theme-css' => 'style',
+					),
+				);
+			}
 
 			return apply_filters( 'astra_theme_assets', $default_assets );
 		}
@@ -261,6 +282,7 @@ if ( ! class_exists( 'Astra_Enqueue_Scripts' ) ) {
 			}
 
 			if ( is_array( $scripts ) && ! empty( $scripts ) ) {
+
 				// Register & Enqueue Scripts.
 				foreach ( $scripts as $key => $script ) {
 

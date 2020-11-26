@@ -125,6 +125,25 @@ if ( ! class_exists( 'Astra_Blog_Single_Layout_Configs' ) ) {
 				),
 			);
 
+			if ( Astra_Builder_Helper::$is_header_footer_builder_active ) {
+
+				array_push(
+					$_configs,
+					/**
+					 * Option: Blog / Archive Tabs.
+					 */
+					array(
+						'name'        => ASTRA_THEME_SETTINGS . '[builder-single-post-tabs]',
+						'section'     => 'section-blog-single',
+						'type'        => 'control',
+						'control'     => 'ast-builder-header-control',
+						'priority'    => 0,
+						'description' => '',
+					)
+				);
+
+			}
+
 			$configurations = array_merge( $configurations, $_configs );
 
 			return $configurations;
@@ -135,8 +154,3 @@ if ( ! class_exists( 'Astra_Blog_Single_Layout_Configs' ) ) {
 
 
 new Astra_Blog_Single_Layout_Configs();
-
-
-
-
-

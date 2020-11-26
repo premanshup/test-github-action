@@ -65,7 +65,9 @@ if ( ! class_exists( 'Astra_Site_Container_Layout_Configs' ) ) {
 						'page-builder'            => __( 'Full Width / Stretched', 'astra' ),
 					),
 				),
-
+				/**
+				 * Option: Single Page Content Layout
+				 */
 				array(
 					'name'     => ASTRA_THEME_SETTINGS . '[single-page-content-layout]',
 					'type'     => 'control',

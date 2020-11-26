@@ -29,32 +29,46 @@ if ( ! class_exists( 'Astra_Theme_Background_Updater' ) ) {
 		 * @var array
 		 */
 		private static $db_updates = array(
-			'2.1.3' => array(
+			'2.1.3'        => array(
 				'astra_submenu_below_header',
 			),
-			'2.2.0' => array(
+			'2.2.0'        => array(
 				'astra_page_builder_button_color_compatibility',
 				'astra_vertical_horizontal_padding_migration',
 			),
-			'2.3.0' => array(
+			'2.3.0'        => array(
 				'astra_header_button_new_options',
 			),
-			'2.3.3' => array(
+			'2.3.3'        => array(
 				'astra_elementor_default_color_typo_comp',
 			),
-			'2.3.4' => array(
+			'2.3.4'        => array(
 				'astra_breadcrumb_separator_fix',
 			),
-			'2.4.0' => array(
+			'2.4.0'        => array(
 				'astra_responsive_base_background_option',
 				'astra_update_theme_tablet_breakpoint',
 			),
-			'2.4.4' => array(
+			'2.4.4'        => array(
 				'astra_gtn_full_wide_image_group_css',
 			),
-			'2.5.0' => array(
+			'2.5.0'        => array(
 				'astra_global_button_woo_css',
 				'astra_gtn_full_wide_group_cover_css',
+			),
+			'2.5.2'        => array(
+				'astra_footer_widget_bg',
+			),
+			'2.6.0'        => array(
+				'astra_bg_control_migration',
+				'astra_bg_responsive_control_migration',
+				'astra_gutenberg_core_blocks_design_compatibility',
+			),
+			'2.6.1'        => array(
+				'astra_gutenberg_media_text_block_css_compatibility',
+			),
+			'3.0.0-beta.1' => array(
+				'astra_header_builder_compatibility',
 			),
 		);
 
@@ -71,11 +85,11 @@ if ( ! class_exists( 'Astra_Theme_Background_Updater' ) ) {
 			}
 
 			// Core Helpers - Batch Processing.
-			require_once ASTRA_THEME_DIR . 'inc/lib/batch-processing/class-wp-async-request.php';
-			require_once ASTRA_THEME_DIR . 'inc/lib/batch-processing/class-wp-background-process.php';
-			require_once ASTRA_THEME_DIR . 'inc/theme-update/class-wp-background-process-astra-theme.php';
+			require_once ASTRA_THEME_DIR . 'inc/lib/batch-processing/class-astra-wp-async-request.php';// phpcs:ignore: WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
+			require_once ASTRA_THEME_DIR . 'inc/lib/batch-processing/class-astra-wp-background-process.php';// phpcs:ignore: WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
+			require_once ASTRA_THEME_DIR . 'inc/theme-update/class-astra-theme-wp-background-process.php';// phpcs:ignore: WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 
-			self::$background_updater = new WP_Background_Process_Astra_Theme();
+			self::$background_updater = new Astra_Theme_WP_Background_Process();
 
 		}
 
@@ -265,7 +279,6 @@ if ( ! class_exists( 'Astra_Theme_Background_Updater' ) ) {
 		private function update( $fallback ) {
 			$current_db_version = astra_get_option( 'theme-auto-version' );
 
-			error_log( 'Astra: Batch Process Started!' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			if ( count( $this->get_db_update_callbacks() ) > 0 ) {
 				foreach ( $this->get_db_update_callbacks() as $version => $update_callbacks ) {
 					if ( version_compare( $current_db_version, $version, '<' ) ) {
@@ -273,14 +286,12 @@ if ( ! class_exists( 'Astra_Theme_Background_Updater' ) ) {
 							if ( $fallback ) {
 								call_user_func( $update_callback );
 							} else {
-								error_log( sprintf( 'Astra: Queuing %s - %s', $version, $update_callback ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 								self::$background_updater->push_to_queue( $update_callback );
 							}
 						}
 					}
 				}
 				if ( $fallback ) {
-					error_log( 'Astra: Running migration without batch processing.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 					self::update_db_version();
 				} else {
 					astra_update_option( 'is_theme_queue_running', true );
@@ -336,8 +347,6 @@ if ( ! class_exists( 'Astra_Theme_Background_Updater' ) ) {
 
 			// Update auto saved version number.
 			astra_update_option( 'theme-auto-version', $theme_version );
-
-			error_log( 'Astra: db version updated successfully!' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
 			astra_update_option( 'is_theme_queue_running', false );
 

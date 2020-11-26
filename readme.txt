@@ -3,9 +3,9 @@ Contributors: brainstormforce
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: custom-menu, custom-logo, entertainment, featured-images, full-width-template, one-column, two-columns, left-sidebar, e-commerce, right-sidebar, custom-colors, editor-style, featured-images, full-width-template, microformats, post-formats, rtl-language-support, theme-options, threaded-comments, translation-ready, blog
-Tested up to: 5.4.2
-Requires PHP: 5.3 or higher
-Stable tag: 2.5.1
+Tested up to: 5.5.3
+Requires PHP: 5.3
+Stable tag: 3.0.0-beta.1
 
 Astra is fast, fully customizable & beautiful WordPress theme suitable for blog, personal portfolio, business website and WooCommerce storefront.
 
@@ -74,13 +74,16 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.com/normalize.css/
 Flexibility is a JavaScript polyfill for Flexbox By Jonathan Neal, 10up. (https://github.com/jonathantneal/flexibility)
 Licensed under MIT ( https://github.com/jonathantneal/flexibility/blob/master/LICENSE.md )
 
-= WP Color Picker Alpha =
-
-WP Color Picker Alpha is used to Overwrite Automattic Iris for enabled Alpha Channel in wpColorPicker By Sergio. (https://github.com/kallookoo/wp-color-picker-alpha)
-Distributed under the terms of the GNU GPL v2.
-
 = IcoMoon-Free =
 
 Astra icon font is based on IcoMoon-Free vector icon by Keyamoon.
 IcoMoon-Free vector icon destributed under trems of CC BY 4.0 or GPL. (https://creativecommons.org/licenses/by/4.0/ or https://www.gnu.org/licenses/gpl.html)
 Source: https://keyamoon.com/
+
+= Breadcrumb Trail =
+
+Astra default breadcrumb is based on Breadcrumb Trail by Justin Tadlock. (https://github.com/justintadlock/breadcrumb-trail)
+Breadcrumb Trail is distributed under the terms of the GNU GPL v2 or later.
+
+Underscores
+https://underscores.me/, (C) 2012-2020 Automattic, Inc., [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html)

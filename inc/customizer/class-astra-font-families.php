@@ -136,22 +136,13 @@ if ( ! class_exists( 'Astra_Font_Families' ) ) :
 				 * @param string $json_file File where google fonts json format added.
 				 * @return array
 				 */
-				$google_fonts_json_file = astra_apply_filters_deprecated( 'astra_google_fonts_json_file', array( ASTRA_THEME_DIR . 'assets/fonts/google-fonts.json', '' ), '2.5.0', false, '`astra_google_fonts_php_file`. Please check this doc for more information - https://wpastra.com/docs/deprecated-google-fonts-filter' );
-				$google_fonts_file      = apply_filters( 'astra_google_fonts_php_file', ASTRA_THEME_DIR . 'inc/google-fonts.php' );
+				$google_fonts_file = apply_filters( 'astra_google_fonts_php_file', ASTRA_THEME_DIR . 'inc/google-fonts.php' );
 
 				if ( ! file_exists( $google_fonts_file ) ) {
 					return array();
 				}
 
-				if ( ( ASTRA_THEME_DIR . 'assets/fonts/google-fonts.json' ) === $google_fonts_json_file ) {
-					$google_fonts_arr = include $google_fonts_file;
-				} else {
-					if ( ! file_exists( $google_fonts_json_file ) ) {
-						return array();
-					}
-					$file_contents    = astra_filesystem()->get_contents( $google_fonts_json_file );
-					$google_fonts_arr = json_decode( $file_contents, 1 );
-				}
+				$google_fonts_arr = include $google_fonts_file;// phpcs:ignore: WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 
 				foreach ( $google_fonts_arr as $key => $font ) {
 					$name = key( $font );

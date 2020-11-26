@@ -1912,6 +1912,7 @@ input[type="submit"]:focus {
 
 .ast-search-menu-icon {
   position: relative;
+  z-index: 3;
 }
 
 .ast-header-break-point.ast-header-custom-item-outside .main-header-bar .ast-search-icon {
@@ -2406,7 +2407,7 @@ body {
 }
 
 .main-header-menu .menu-link,
-.main-header-menu a {
+.main-header-menu > a {
   text-decoration: none;
   padding: 0 1em;
   display: inline-block;
@@ -3256,11 +3257,6 @@ body {
 
 .ast-menu-toggle:focus {
   outline: thin dotted;
-}
-
-.socil-font {
-  float: right;
-  margin-left: 10px;
 }
 
 /**

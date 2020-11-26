@@ -61,15 +61,15 @@ if ( ! class_exists( 'Astra_Ext_Transparent_Header_Loader' ) ) {
 			$defaults['different-transparent-logo']                    = 0;
 			$defaults['different-transparent-retina-logo']             = 0;
 			$defaults['transparent-header-logo-width']                 = array(
-				'desktop' => '',
-				'tablet'  => '',
-				'mobile'  => '',
+				'desktop' => 150,
+				'tablet'  => 120,
+				'mobile'  => 100,
 			);
 			$defaults['transparent-header-enable']                     = 0;
 			$defaults['transparent-header-disable-archive']            = 1;
 			$defaults['transparent-header-disable-latest-posts-index'] = 1;
 			$defaults['transparent-header-on-devices']                 = 'both';
-			$defaults['transparent-header-main-sep']                   = 0;
+			$defaults['transparent-header-main-sep']                   = '';
 			$defaults['transparent-header-main-sep-color']             = '';
 
 			/**
@@ -168,6 +168,7 @@ if ( ! class_exists( 'Astra_Ext_Transparent_Header_Loader' ) ) {
 		 */
 		public function customize_register( $wp_customize ) {
 
+			// @codingStandardsIgnoreStart WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 			/**
 			 * Register Panel & Sections
 			 */
@@ -179,7 +180,7 @@ if ( ! class_exists( 'Astra_Ext_Transparent_Header_Loader' ) ) {
 			require_once ASTRA_THEME_TRANSPARENT_HEADER_DIR . 'classes/sections/class-astra-customizer-colors-transparent-header-configs.php';
 			// Check Transparent Header is activated.
 			require_once ASTRA_THEME_TRANSPARENT_HEADER_DIR . 'classes/sections/class-astra-customizer-transparent-header-configs.php';
-
+			// @codingStandardsIgnoreEnd WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 		}
 
 		/**
