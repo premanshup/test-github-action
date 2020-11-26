@@ -641,7 +641,7 @@ if ( ! class_exists( 'Astra_Dynamic_CSS' ) ) {
 					'justify-content' => 'center',
 				),
 			);
-			$parse_css .= astra_parse_css( $gtn_plugin_button_center_alignment );
+			$parse_css                         .= astra_parse_css( $gtn_plugin_button_center_alignment );
 
 			/*
 			* Fix the wide width issue in gutenberg
