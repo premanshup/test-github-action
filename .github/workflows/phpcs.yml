@@ -1,15 +1,23 @@
-name: PHPCS check
+name: PHP_CodeSniffer
 
 on: pull_request
 
 jobs:
   phpcs:
-      name: PHPCS
-      runs-on: ubuntu-latest
-      steps:
-        - name: Install dependencies
-          run: composer install --dev --prefer-dist --no-progress --no-suggest
-        - name: PHPCS check
-          uses: chekalsky/phpcs-action@v1
-          with:
-            phpcs_bin_path: './vendor/bin/phpcs'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.3'
+          coverage: none
+          tools: composer, cs2pr
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-suggest --no-progress
+
+      - name: Detect coding standard violations
+        run: vendor/bin/phpcs
